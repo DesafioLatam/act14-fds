@@ -23,12 +23,12 @@
 
 * Importe la base de datos `iris` con `load_iris` en un nuevo objeto:
     - _tip_: La matriz de atributos se encuentra en `.data`.
-* Para simplificar la dimensionalidad de la beduzca las dimensiones de la base de datos para obtener dos componentes principales.
+* Para simplificar la dimensionalidad de la base reduzca las dimensiones de la base de datos para obtener dos componentes principales.
 * Comente cuánta es la varianza explicada por ambos componentes.
 * Grafique ambas dimensiones con un scatter plot.
 * Exploremos la cantidad de clusters necesarios. Para ello estimen la inercia con $k$ entre 2 y 50. También calculen el diferencial (_tip_: puede utilizar el método `.diff()` de `pd.Series`). Grafiquen ambas curvas.
-* Utilicen como criterio de selección aquél cluster cuya disminución en la inercia sea mayor a 15
-* Reentrenen el modelo con todos los datos en base al 
+* Utilicen como criterio de selección aquél cluster cuya disminución en la inercia sea mayor a 15.
+* Reentrenen el modelo con todos los datos en base al criterio de selección.
 * Grafique los resultados e identifique todos los puntos con `kmeans.labels_`
 
 
