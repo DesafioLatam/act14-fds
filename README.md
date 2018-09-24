@@ -1,46 +1,58 @@
 ![](logo.png)
 
-# Unidad: Dimensionalidad y Agrupación - Sesión 2
-
-## Reducción de dimensiones en Machine Learning
+# Actividad 14 - Dimensionalidad y Agrupación
 
 * Para poder realizar esta actividad debes haber revisado la lectura correspondiente a la semana.
 * Crea una carpeta de trabajo y guarda todos los archivos correspondientes (notebook y csv).
-* Una vez terminada la actividad, comprime la carpeta y sube el `.zip` a la sección correspondiente.
+* Una vez terminada la actividad, comprime la carpeta y sube el `.zip` a la sección correspondiente
+
+# Unidad: Dimensionalidad y Agrupación - Sesión 2
 
 
 ## Ejercicio 1: Preparación del ambiente de trabajo
 
-* Para este ejercicio trabajaremos de manera __conjunta__ en dos bases de datos que se encuentra en `sklearn.datasets`:
-    * `breast_cancer`: Base de datos de diagnóstico de cáncer de mamas.
-    * `iris`: Base de datos sobre atributos morfológicos de flores _Iris_.
+* Para este ejercicio trabajaremos de manera __conjunta__ identificando la paleta de colores de carátulas de álbumes.
+    * Las imágenes se encuentran en una carpeta con el nombre `album_covers`
+    * Cada imagen tiene la siguiente nomenclatura: `artista-nombre-del-album.jpg`.
+* El objetivo es generar un método que nos permita identificar la dominancia de una cantidad finita de colores.
+* Para importar imágenes y visualizarlas, vamos a importar las siguientes librerías:
+    * Partamos por incluír las librerías clásicas: `pandas`, `numpy` y `matplotlib.pyplot`.
+    * `sklearn.cluster.KMeans`: para extraer los principales componentes de una matriz numérica.
+    * `skimage.io`: Para poder ingresar y leer imágenes.
 
-* Importe los módulos básicos para el análisis de datos.
-* Importe los módulos `KMeans`, `PCA`, `train_test_split` y `StandardScaler`.
+## Ejercicio 2: Importación de imagenes
+
+* Partamos por ingresar una imágen a nuestro ambiente de trabajo. Para ello ocuparemos `io.imread`. ¿Qué devuelve?
+* Para visualizar la imágen en el notebook, ocupe `io.imshow`.
+
+## Ejercicio 3: Preprocesamiento de imágenes y KMeans
+
+* Con la representación numérica de la imágen, vamos a extraer la altura, el ancho y la cantidad de canales mediante `shape`.
+* Posteriormente redimensionaremos la imágen con `reshape`.
+* Partamos por inicializar nuestro algoritmo `KMeans` con un `k=8`, ¿Qué significará esto?
+* Vuelva a implementar el mismo algoritmo con `MiniBatchKMeans`. ¿Qué diferencia existe con `KMeans`?
+
+## Ejercicio 4: Extracción de valores
+
+* Ahora extraeremos las etiquetas predichas con `labels_`. Hasta el momento las etiquetas hacen referencia a cada centroide. Para imputar sentido en éstos, debemos extraer los valores de los centroides.
+* Para extraer los centroides (valores característicos), utilicemos el atributo `cluster_centers_`.
+* Con las etiquetas, generaremos un conteo de ocurrencia con `np.unique`. Para extraer el conteo, debemos implementar la opción `return_counts=True`.
+
+## Ejercicio 5: Conversión rgb a hex
+
+* Con los centroides, vamos a convertirlos a formato hexadecimal. Vamos a generar una función y la pasaremos con `map` por cada centroide.
+
+## Ejercicio 6: Definición de base
+
+* Ahora generaremos un `DataFrame` con las siguientes variables:
+    - El color `hex`.
+    - La ocurrencia del color en cada pixel `count`.
+    - El porcentaje de ocurrencia de cada color respecto a `cluster_centers_`.
+* Posteriormente ordenaremos los colores de forma descendente por el porcentaje de ocurrencia.
+
+## Ejercicio 7: Visualización
+
+* Genere un gráfico de barras donde presente el porcentaje de cada color. Las barras deben estar coloreadas con el color inferido.
 
 
-## Ejercicio 2: Agrupando atributos con KMeans
-
-* Importe la base de datos `iris` con `load_iris` en un nuevo objeto:
-    - _tip_: La matriz de atributos se encuentra en `.data`.
-* Para simplificar la dimensionalidad de la base reduzca las dimensiones de la base de datos para obtener dos componentes principales.
-* Comente cuánta es la varianza explicada por ambos componentes.
-* Grafique ambas dimensiones con un scatter plot.
-* Exploremos la cantidad de clusters necesarios. Para ello estimen la inercia con $k$ entre 2 y 50. También calculen el diferencial (_tip_: puede utilizar el método `.diff()` de `pd.Series`). Grafiquen ambas curvas.
-* Utilicen como criterio de selección aquél cluster cuya disminución en la inercia sea mayor a 15.
-* Reentrenen el modelo con todos los datos en base al criterio de selección.
-* Grafique los resultados e identifique todos los puntos con `kmeans.labels_`
-
-
-## Ejercicio 2: Reduciendo dimensiones
-
-* Importe la base de datos `breast_cancer` con `load_breast_cancer` en un nuevo objeto:
-    - _tip_: La matriz de atributos se encuentra en `.data`.
-* Separe los datos en dos objetos: `benigno` y `maligno`. Utilice la información disponible en `.target` para ello.
-* Ahora compararemos la distribución empírica para cada atributo en la base mediante histogramas.
-* Reduzca la matriz de atributos a dos.
-* Reporte el nivel de de varianza explicada por ambas dimensiones.
-* Reporte la asociación entre cada atributo y los componentes extraídos.
-* Visualice la relación entre ambos componentes y etiquete los puntos en base a su atributo `target`.
-
-
+## Bonus point: envuelva todo en una función
